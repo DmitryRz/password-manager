@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали аккаунта - Менеджер паролей</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Менеджер паролей</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="nav-link" data-page="main">Главная</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="account-details-page" class="page">
+            <div class="card account-details" style="margin: 30px auto;">
+                <h2>Детали аккаунта</h2>
+
+                <div class="detail-row">
+                    <div class="detail-label">Название:</div>
+                    <div class="detail-value" id="detail-name">Example</div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Имя пользователя:</div>
+                    <div class="detail-value" id="detail-username">user@example.com</div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Пароль:</div>
+                    <div class="detail-value password-field">
+                        <span class="password-text" id="detail-password">******</span>
+                        <button type="button" class="btn-secondary"
+                            style="margin-left: 10px; width: auto; flex-shrink: 0;"
+                            id="details-toggle-password">Показать</button>
+                        <button type="button" class="btn-secondary"
+                            style="margin-left: 10px; width: auto; flex-shrink: 0;"
+                            id="details-copy-password">Копировать</button>
+                    </div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">URL:</div>
+                    <div class="detail-value" id="detail-url"><a href="https://example.com"
+                            target="_blank">https://example.com</a></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Категория:</div>
+                    <div class="detail-value" id="detail-category">Социальные сети</div>
+                </div>
+
+                <div class="detail-row" style="border-bottom: none;">
+                    <div class="detail-label">Примечания:</div>
+                    <div class="detail-value" id="detail-notes">Личный аккаунт</div>
+                </div>
+
+                <div class="actions" style="justify-content: flex-start;">
+                    <button type="button" id="edit-account">Редактировать</button>
+                    <button type="button" class="btn-danger" id="delete-account">Удалить</button>
+                    <button type="button" class="btn-secondary" onclick="window.location.href='index.html'">Назад к
+                        аккаунтам</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
