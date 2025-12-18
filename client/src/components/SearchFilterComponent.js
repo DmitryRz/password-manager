@@ -19,8 +19,37 @@ const createSearchFilterTemplate = () => {
 };
 
 class SearchFilterComponent extends AbstractComponent {
+    constructor() {
+        super();
+        this._callback = {};
+    }
+
     get template() {
         return createSearchFilterTemplate();
+    }
+
+    setAddAccountHandler(callback) {
+        this._callback.addAccount = callback;
+        this.element.querySelector('#add-account-btn').addEventListener('click', this.#addAccountHandler);
+    }
+
+    setFilterChangeHandler(callback) {
+        this._callback.filterChange = callback;
+        this.element.querySelector('#search-input').addEventListener('input', this.#filterChangeHandler);
+        this.element.querySelector('#category-filter').addEventListener('change', this.#filterChangeHandler);
+    }
+
+    #addAccountHandler = (evt) => {
+        evt.preventDefault();
+        this._callback.addAccount?.();
+    };
+
+    #filterChangeHandler = (evt) => {
+        evt.preventDefault();
+        this._callback.filterChange?.({
+            searchTerm: this.element.querySelector('#search-input').value,
+            category: this.element.querySelector('#category-filter').value
+        });
     }
 }
 

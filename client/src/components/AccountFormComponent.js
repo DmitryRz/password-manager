@@ -9,7 +9,7 @@ const createAccountFormTemplate = (accountData = {}) => {
         password = '',
         url = '',
         category = '',
-        notes = ''
+        description = ''
     } = accountData;
 
     return (`
@@ -55,13 +55,13 @@ const createAccountFormTemplate = (accountData = {}) => {
             </div>
 
             <div class="form-group">
-                <label for="notes">Примечания</label>
-                <textarea id="notes" rows="3">${notes}</textarea>
+                <label for="description">Описание</label>
+                <textarea id="description" rows="3">${description}</textarea>
             </div>
 
             <div class="actions" style="margin-top: 25px; display: flex; justify-content: flex-end;">
                 <button type="submit">Сохранить</button>
-                <button type="button" class="btn-secondary" onclick="window.history.back()">Отмена</button>
+                <button type="button" class="btn-secondary" id="cancel-form">Отмена</button>
             </div>
         </form>
     `);
@@ -71,10 +71,61 @@ class AccountFormComponent extends AbstractComponent {
     constructor(accountData) {
         super();
         this._accountData = accountData || {};
+        this._callback = {};
+
+        this.#setInnerHandlers();
     }
 
     get template() {
         return createAccountFormTemplate(this._accountData);
+    }
+
+    setCancelClickHandler(callback) {
+        this._callback.cancel = callback;
+        this.element.querySelector('#cancel-form').addEventListener('click', (evt) => {
+            evt.preventDefault();
+            this._callback.cancel?.();
+        });
+    }
+
+    setSaveHandler(callback) {
+        this._callback.save = callback;
+        this.element.addEventListener('submit', this.#saveHandler);
+    }
+
+    #setInnerHandlers() {
+        const passwordInput = this.element.querySelector('#password');
+        const toggleButton = this.element.querySelector('#toggle-password');
+
+        if (toggleButton) {
+            toggleButton.addEventListener('click', () => {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleButton.textContent = 'Скрыть';
+                } else {
+                    passwordInput.type = 'password';
+                    toggleButton.textContent = 'Показать';
+                }
+            });
+        }
+    }
+
+    #saveHandler = (evt) => {
+        evt.preventDefault();
+        this._callback.save?.(this.#getFormData());
+    }
+
+    #getFormData() {
+        const form = this.element;
+        return {
+            name: form.querySelector('#account-name').value,
+            username: form.querySelector('#username').value,
+            password: form.querySelector('#password').value,
+            url: form.querySelector('#url').value,
+            category: form.querySelector('#category').value,
+            description: form.querySelector('#description').value,
+            ...(this._accountData.id && { id: this._accountData.id })
+        };
     }
 }
 

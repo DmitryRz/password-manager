@@ -9,7 +9,7 @@ const createAccountDetailsTemplate = (details) => {
         passwordPlaceholder,
         url,
         category,
-        notes
+        description
     } = details;
 
     const urlLink = url ? `<a href="${url}" target="_blank">${url}</a>` : '';
@@ -52,8 +52,8 @@ const createAccountDetailsTemplate = (details) => {
             </div>
 
             <div class="detail-row" style="border-bottom: none;">
-                <div class="detail-label">Примечания:</div>
-                <div class="detail-value" id="detail-notes">${notes}</div>
+                <div class="detail-label">Описание:</div>
+                <div class="detail-value" id="detail-description">${description}</div>
             </div>
 
             <div class="actions" style="justify-content: flex-start;">
@@ -70,6 +70,9 @@ class AccountDetailsDisplayComponent extends AbstractComponent {
         super();
         this._details = details;
         this._callback = {};
+        this._isPasswordVisible = false;
+        
+        this.#setInnerHandlers();
     }
 
     get template() {
@@ -79,26 +82,62 @@ class AccountDetailsDisplayComponent extends AbstractComponent {
             passwordPlaceholder: '******', 
             url: this._details.url || '',
             category: this._details.category || 'Не указана',
-            notes: this._details.notes || 'Нет примечаний'
+            description: this._details.description || 'Нет описания'
         };
         return createAccountDetailsTemplate(displayDetails);
     }
 
+    #setInnerHandlers() {
+        const toggleBtn = this.element.querySelector('#details-toggle-password');
+        const passwordSpan = this.element.querySelector('#detail-password');
+
+        toggleBtn.addEventListener('click', () => {
+            this._isPasswordVisible = !this._isPasswordVisible;
+            if (this._isPasswordVisible) {
+                passwordSpan.textContent = this._details.password;
+                toggleBtn.textContent = 'Скрыть';
+            } else {
+                passwordSpan.textContent = '******';
+                toggleBtn.textContent = 'Показать';
+            }
+        });
+
+        const copyBtn = this.element.querySelector('#details-copy-password');
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(this._details.password);
+        });
+    }
+
     setBackToAccountsHandler(callback) {
         this._callback.backToAccounts = callback;
-        console.log(callback)
-        console.log("вернуть к аккаунтам обработчик установлен");
-
         this.element.querySelector('#back-to-accounts')
             .addEventListener('click', this._backToAccountsHandler);
     }
 
     _backToAccountsHandler = (evt) => {
         evt.preventDefault();
-        if (this._callback.backToAccounts) {
-            this._callback.backToAccounts();
-        }
+        this._callback.backToAccounts?.();
     };
+
+    setDeleteHandler(callback) {
+        this._callback.delete = callback;
+        this.element.querySelector('#delete-account').addEventListener('click', this.#deleteHandler);
+    }
+
+    #deleteHandler = (evt) => {
+        evt.preventDefault();
+        this._callback.delete?.();
+    }
+
+    setEditHandler(callback) {
+        this._callback.edit = callback;
+        this.element.querySelector('#edit-account').addEventListener('click', this.#editHandler);
+    }
+
+    #editHandler = (evt) => {
+        evt.preventDefault();
+        this._callback.edit?.();
+    }
 }
 
 export default AccountDetailsDisplayComponent;

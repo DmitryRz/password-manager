@@ -20,11 +20,22 @@ class AccountCardComponent extends AbstractComponent {
     constructor(account) {
         super();
         this._account = account;
+        this._callback = {};
     }
 
     get template() {
         return createAccountCardTemplate(this._account);
     }
+
+    setClickHandler(callback) {
+        this._callback.click = callback;
+        this.element.addEventListener('click', this.#clickHandler);
+    }
+
+    #clickHandler = (evt) => {
+        evt.preventDefault();
+        this._callback.click?.();
+    };
 }
 
 export default AccountCardComponent;
