@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер паролей</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Менеджер паролей</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="main">Главная</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="main-page" class="page main-content">
+            <div class="generator-section">
+                    <div class="card">
+                        <h2>Генератор паролей</h2>
+
+                        <div class="password-generator">
+                            <div class="password-display" id="generated-password">password</div>
+
+                            <div>
+                                <label>Длина пароля</label>
+                                <input type="number" id="password-length" min="6" max="50" value="12">
+                            </div>
+
+                            <div class="password-options">
+                                <div>
+                                    <label>Заглавные буквы (A-Z)</label>
+                                    <input type="checkbox" id="include-uppercase">
+                                </div>
+                                <div>
+                                    <label>Строчные буквы (a-z)</label>
+                                    <input type="checkbox" id="include-lowercase">
+                                </div>
+                                <div>
+                                    <label>Цифры (0-9)</label>
+                                    <input type="checkbox" id="include-numbers">
+                                </div>
+                                <div>
+                                    <label>Символы (!@#$%^&*)</label>
+                                    <input type="checkbox" id="include-symbols">
+                                </div>
+                            </div>
+
+                            <div class="password-actions">
+                                <button id="generate-btn">Сгенерировать</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="accounts-section">
+                    <div class="card">
+                        <h2>Мои аккаунты</h2>
+
+                        <div class="search-filter">
+                            <input type="text" id="search-input" placeholder="Поиск по названию или имени пользователя">
+                            <select id="category-filter">
+                                <option value="">Все категории</option>
+                                <option value="Социальные сети">Социальные сети</option>
+                                <option value="Работа">Работа</option>
+                                <option value="Финансы">Финансы</option>
+                                <option value="Развлечения">Развлечения</option>
+                            </select>
+                            <button id="add-account-btn">Добавить аккаунт</button>
+                        </div>
+
+                        <div class="accounts-grid" id="accounts-container">
+                            <div class="account-card" onclick="showAccountDetails(1)">
+                                <div class="account-name">Названия 1</div>
+                                <div class="account-username">Логин 1</div>
+                                <div class="account-category">Категория 1</div>
+                            </div>
+
+                            <div class="account-card">
+                                <div class="account-name">Названия 2</div>
+                                <div class="account-username">Логин 2</div>
+                                <div class="account-category">Категория 2</div>
+                            </div>
+
+                            <div class="account-card">
+                                <div class="account-name">Названия 3</div>
+                                <div class="account-username">Логин 3</div>
+                                <div class="account-category">Категория 3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+
+</html>
